@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/RatePrediction.iml" filepath="$PROJECT_DIR$/.idea/RatePrediction.iml" group="RatePrediction" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="RatePrediction/app" />
+      <module fileurl="file://$PROJECT_DIR$/project-RatePrediction.iml" filepath="$PROJECT_DIR$/project-RatePrediction.iml" group="RatePrediction" />
     </modules>
   </component>
 </project>
