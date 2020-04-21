@@ -35,6 +35,7 @@ import com.opencsv.CSVWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     int level, rsrp, rsrq, rssi, rssnr;
     double latitude, longitude;
     boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true;
+    Timestamp timestamp;
 
     static String TAG = "hda";
     ArrayList<String[]> networkDataList = new ArrayList<>();
@@ -216,7 +218,9 @@ public class MainActivity extends AppCompatActivity {
     private void writeDataToCSV() {
         String folderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
         File folder = new File(folderPath);
-        String fileName = "NetworkData.csv";
+        timestamp = new Timestamp(System.currentTimeMillis());
+        //String fileName = "NetworkData.csv";
+        String fileName = timestamp.toString()+".csv";
         if (!folder.exists()) {
             if (!folder.mkdir()) {
                 Toast.makeText(getApplicationContext(), "Folder cannot be created", Toast.LENGTH_LONG).show();
@@ -239,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
 
                 CSVWriter csvWriter = new CSVWriter(new FileWriter(csv, true));
                 if (isFirstCSVWrite) {
-                    String[] headerNames = {"RSRP", "RSRQ", "RSSI", "RSSNR", "LATITUDE", "LONGITUDE"};
+                    String[] headerNames = {"Systime","RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE"};
                     csvWriter.writeNext(headerNames);
                     isFirstCSVWrite = false;
                 }
@@ -258,7 +262,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepareCSVData() {
-        String[] networkData = {String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssi), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude)};
+        timestamp = new Timestamp(System.currentTimeMillis());
+        String[] networkData = {String.valueOf(timestamp),String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssi), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude)};
         networkDataList.add(networkData);
     }
 
