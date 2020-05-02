@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.telephony.CellIdentityLte;
 import android.telephony.CellInfo;
 import android.telephony.CellInfoCdma;
 import android.telephony.CellInfoGsm;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonStartResume, buttonStop, buttonSaveToCsv;
 
     int timeCount = 0;
-    int level, rsrp, rsrq, rssi, rssnr;
+    int level, rsrp, rsrq, rssi, rssnr, cqi, asuLevel, timingAdvance, dbm, bandwidth, ci, earFcn, tac, pci;
     double latitude, longitude;
     boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true;
     Timestamp timestamp;
@@ -164,8 +165,19 @@ public class MainActivity extends AppCompatActivity {
                         rsrq = lte.getRsrq();  //Get reference signal received quality
                         rssi = lte.getRssi();  //Get Received Signal Strength Indication (RSSI) in dBm The value range is [-113, -51] inclusively or CellInfo#UNAVAILABLE if unavailable.
                         rssnr = lte.getRssnr(); //Get reference signal signal-to-noise ratio
+                        cqi = lte.getCqi();
+                        asuLevel = lte.getAsuLevel();
+                        timingAdvance = lte.getTimingAdvance();
+                        dbm = lte.getDbm();
 
-                        log = " Operator: " + networkOperator + " dBm" + "\n Signal Quality :" + level + " dBm" + "\n RSRP :" + rsrp + " dBm" + "\n RSRQ :" + rsrq + " dBm" + "\n RSSI :" + rssi + " dBm" + "\n RSSNR :" + rssnr;
+                        final CellIdentityLte lteCellInfo = ((CellInfoLte) infodata).getCellIdentity();
+                        bandwidth = lteCellInfo.getBandwidth();
+                        ci = lteCellInfo.getCi();
+                        earFcn = lteCellInfo.getEarfcn();
+                        tac = lteCellInfo.getTac();
+                        pci = lteCellInfo.getPci();
+
+                        log = " Operator: " + networkOperator + "\n Signal Quality: " + level + " dBm" + "\n RSRP: " + rsrp + " dBm" + "\n RSRQ: " + rsrq + " dBm" + "\n RSSI: " + rssi + " dBm" + "\n RSSNR: " + rssnr + "\n CQI: " + cqi + "\n ASU Level: " + asuLevel + "\n Timing Advance: " + timingAdvance + "\n dBm: " + dbm + "\n Bandwidth: " + bandwidth + "\n CI: " + ci + "\n Earfcn: " + earFcn + "\n TAC :" + tac + "\n PCI: " + pci;
                         Log.i(TAG, log);
 
                         if (isFirstOperatorDisplay) {
@@ -220,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         File folder = new File(folderPath);
         timestamp = new Timestamp(System.currentTimeMillis());
         //String fileName = "NetworkData.csv";
-        String fileName = timestamp.toString()+".csv";
+        String fileName = timestamp.toString() + ".csv";
         if (!folder.exists()) {
             if (!folder.mkdir()) {
                 Toast.makeText(getApplicationContext(), "Folder cannot be created", Toast.LENGTH_LONG).show();
@@ -243,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                 CSVWriter csvWriter = new CSVWriter(new FileWriter(csv, true));
                 if (isFirstCSVWrite) {
-                    String[] headerNames = {"Systime","RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE"};
+                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE"};
                     csvWriter.writeNext(headerNames);
                     isFirstCSVWrite = false;
                 }
@@ -263,7 +275,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareCSVData() {
         timestamp = new Timestamp(System.currentTimeMillis());
-        String[] networkData = {String.valueOf(timestamp),String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssi), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude)};        networkDataList.add(networkData);
+        String[] networkData = {String.valueOf(timestamp), String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssi), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude)};
+        networkDataList.add(networkData);
     }
 
     private void initializeGraph(GraphView graph) {
