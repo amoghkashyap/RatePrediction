@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     LineGraphSeries<DataPoint> rssnrLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
     LineGraphSeries<DataPoint> latitudeLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
     LineGraphSeries<DataPoint> longitudeLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
+    // Sumne test ge
     GPSTracker gpsTracker = new GPSTracker(MainActivity.this);
 
     TelephonyManager tm = null;
