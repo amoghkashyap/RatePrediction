@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
 
                 CSVWriter csvWriter = new CSVWriter(new FileWriter(csv, true));
                 if (isFirstCSVWrite) {
-                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE","CQI", "ASULEVEL", "TIMINGADVANCE", "DBM", "BANDWIDTH", "CI", "EARFCN", "TAC", "PCI"};
+                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE"};
                     csvWriter.writeNext(headerNames);
                     isFirstCSVWrite = false;
                 }
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareCSVData() {
         timestamp = new Timestamp(System.currentTimeMillis());
-        String[] networkData = {String.valueOf(timestamp), String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssi), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude), String.valueOf(cqi), String.valueOf(asuLevel), String.valueOf(timingAdvance), String.valueOf(dbm), String.valueOf(bandwidth), String.valueOf(ci), String.valueOf(earFcn), String.valueOf(tac), String.valueOf(pci)};
+        String[] networkData = {String.valueOf(timestamp), String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssi), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude)};
         networkDataList.add(networkData);
     }
 
@@ -307,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
             graph.getViewport().setScrollable(true);
             graph.getViewport().setScrollableY(true);
             graph.getViewport().setScalable(true);
-            graph.getViewport().setScalableY(true);
+            graph.getViewport().setScrollableY(true);
 
 
         } catch (IllegalArgumentException e) {

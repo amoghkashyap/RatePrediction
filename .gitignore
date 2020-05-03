@@ -1,8 +1,3 @@
 .gradle
-app/app.iml
+app.iml
 .DS_Store
-local.properties
-aar.xml
-jar.xml
-checksums.ser
-.idea
