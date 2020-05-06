@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    //@RequiresApi(api = Build.VERSION_CODES.Q)
     private void startReadings() {
         timeCalculator();
         getNetworkParameters();
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         textTimeDisplay.setText(timeFormat);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    //@RequiresApi(api = Build.VERSION_CODES.Q)
     private void getNetworkParameters() {
         String log = "";
 
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         level = lte.getLevel(); //Retrieve an abstract level value for the overall signal quality
                         rsrp = lte.getRsrp();  //Get reference signal received power in dBm
                         rsrq = lte.getRsrq();  //Get reference signal received quality
-                        rssi = lte.getRssi();  //Get Received Signal Strength Indication (RSSI) in dBm The value range is [-113, -51] inclusively or CellInfo#UNAVAILABLE if unavailable.
+                        //rssi = lte.getRssi();  //Get Received Signal Strength Indication (RSSI) in dBm The value range is [-113, -51] inclusively or CellInfo#UNAVAILABLE if unavailable.
                         rssnr = lte.getRssnr(); //Get reference signal signal-to-noise ratio
                         cqi = lte.getCqi();
                         asuLevel = lte.getAsuLevel();
@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                         dbm = lte.getDbm();
 
                         final CellIdentityLte lteCellInfo = ((CellInfoLte) infodata).getCellIdentity();
-                        bandwidth = lteCellInfo.getBandwidth();
+                        //bandwidth = lteCellInfo.getBandwidth();
                         ci = lteCellInfo.getCi();
                         earFcn = lteCellInfo.getEarfcn();
                         tac = lteCellInfo.getTac();
