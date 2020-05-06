@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonStartResume, buttonStop, buttonSaveToCsv;
 
     int timeCount = 0;
-    int level, rsrp, rsrq, rssi, rssnr, cqi, asuLevel, timingAdvance, dbm, bandwidth, ci, earFcn, tac, pci;
+    int level, rsrp, rsrq, rssnr, cqi, asuLevel, timingAdvance, dbm, ci, earFcn, tac, pci;
     double latitude, longitude;
     boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true;
     Timestamp timestamp;
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String[]> networkDataList = new ArrayList<>();
     LineGraphSeries<DataPoint> rsrpLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
     LineGraphSeries<DataPoint> rsrqLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
-    LineGraphSeries<DataPoint> rssiLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
     LineGraphSeries<DataPoint> rssnrLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
     LineGraphSeries<DataPoint> latitudeLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
     LineGraphSeries<DataPoint> longitudeLine = new LineGraphSeries<>(new DataPoint[]{new DataPoint(0, 0)});
@@ -79,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         requestPermission();
 
         buttonStartResume.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void onClick(View v) {
                 isRunning = true;
@@ -105,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //@RequiresApi(api = Build.VERSION_CODES.Q)
     private void startReadings() {
         timeCalculator();
         getNetworkParameters();
@@ -120,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
     private void delayHandler(int milliseconds) {
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.Q)
             @Override
             public void run() {
                 startReadings();
@@ -137,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
         textTimeDisplay.setText(timeFormat);
     }
 
-    //@RequiresApi(api = Build.VERSION_CODES.Q)
     private void getNetworkParameters() {
         String log = "";
 
@@ -163,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
                         level = lte.getLevel(); //Retrieve an abstract level value for the overall signal quality
                         rsrp = lte.getRsrp();  //Get reference signal received power in dBm
                         rsrq = lte.getRsrq();  //Get reference signal received quality
-                        //rssi = lte.getRssi();  //Get Received Signal Strength Indication (RSSI) in dBm The value range is [-113, -51] inclusively or CellInfo#UNAVAILABLE if unavailable.
                         rssnr = lte.getRssnr(); //Get reference signal signal-to-noise ratio
                         cqi = lte.getCqi();
                         asuLevel = lte.getAsuLevel();
@@ -171,13 +165,12 @@ public class MainActivity extends AppCompatActivity {
                         dbm = lte.getDbm();
 
                         final CellIdentityLte lteCellInfo = ((CellInfoLte) infodata).getCellIdentity();
-                        //bandwidth = lteCellInfo.getBandwidth();
                         ci = lteCellInfo.getCi();
                         earFcn = lteCellInfo.getEarfcn();
                         tac = lteCellInfo.getTac();
                         pci = lteCellInfo.getPci();
 
-                        log = " Operator: " + networkOperator + "\n Signal Quality: " + level + " dBm" + "\n RSRP: " + rsrp + " dBm" + "\n RSRQ: " + rsrq + " dBm" + "\n RSSI: " + rssi + " dBm" + "\n RSSNR: " + rssnr + "\n CQI: " + cqi + "\n ASU Level: " + asuLevel + "\n Timing Advance: " + timingAdvance + "\n dBm: " + dbm + "\n Bandwidth: " + bandwidth + "\n CI: " + ci + "\n Earfcn: " + earFcn + "\n TAC :" + tac + "\n PCI: " + pci;
+                        log = " Operator: " + networkOperator + "\n Signal Quality: " + level + " dBm" + "\n RSRP: " + rsrp + " dBm" + "\n RSRQ: " + rsrq + " dBm" + " dBm" + "\n RSSNR: " + rssnr + "\n CQI: " + cqi + "\n ASU Level: " + asuLevel + "\n Timing Advance: " + timingAdvance + "\n dBm: " + dbm + "\n CI: " + ci + "\n Earfcn: " + earFcn + "\n TAC :" + tac + "\n PCI: " + pci;
                         Log.i(TAG, log);
 
                         if (isFirstOperatorDisplay) {
@@ -255,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
                 CSVWriter csvWriter = new CSVWriter(new FileWriter(csv, true));
                 if (isFirstCSVWrite) {
-                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE","CQI", "ASULEVEL", "TIMINGADVANCE", "DBM", "BANDWIDTH", "CI", "EARFCN", "TAC", "PCI"};
+                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSNR", "LATITUDE", "LONGITUDE","CQI", "ASULEVEL", "TIMINGADVANCE", "DBM", "CI", "EARFCN", "TAC", "PCI"};
                     csvWriter.writeNext(headerNames);
                     isFirstCSVWrite = false;
                 }
@@ -275,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void prepareCSVData() {
         timestamp = new Timestamp(System.currentTimeMillis());
-        String[] networkData = {String.valueOf(timestamp), String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssi), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude), String.valueOf(cqi), String.valueOf(asuLevel), String.valueOf(timingAdvance), String.valueOf(dbm), String.valueOf(bandwidth), String.valueOf(ci), String.valueOf(earFcn), String.valueOf(tac), String.valueOf(pci)};
+        String[] networkData = {String.valueOf(timestamp), String.valueOf(rsrp), String.valueOf(rsrq), String.valueOf(rssnr), String.valueOf(latitude), String.valueOf(longitude), String.valueOf(cqi), String.valueOf(asuLevel), String.valueOf(timingAdvance), String.valueOf(dbm), String.valueOf(ci), String.valueOf(earFcn), String.valueOf(tac), String.valueOf(pci)};
         networkDataList.add(networkData);
     }
 
@@ -285,8 +278,6 @@ public class MainActivity extends AppCompatActivity {
             rsrpLine.setTitle("RSRP");
             rsrqLine.setColor(Color.BLUE);
             rsrqLine.setTitle("RSRQ");
-            rssiLine.setColor(Color.GREEN);
-            rssiLine.setTitle("RSSI");
             rssnrLine.setColor(Color.MAGENTA);
             rssnrLine.setTitle("RSSNR");
             latitudeLine.setTitle("LATITUDE");
@@ -299,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
 
             graph.addSeries(rsrpLine);
             graph.addSeries(rsrqLine);
-            graph.addSeries(rssiLine);
             graph.addSeries(rssnrLine);
             graph.addSeries(latitudeLine);
             graph.addSeries(longitudeLine);
@@ -316,12 +306,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void appendDataToGraph() {
-        Log.i(TAG, "appendDataToGraph: " + timeCount + " " + rsrp + " " + rsrq + " " + rssi + " " + rssnr + " " + latitude + " " + longitude);
+        Log.i(TAG, "appendDataToGraph: " + timeCount + " " + rsrp + " " + rsrq + " " + rssnr + " " + latitude + " " + longitude);
         try {
             rsrpLine.appendData(new DataPoint(timeCount, rsrp), true, 10000);
             rsrqLine.appendData(new DataPoint(timeCount, rsrq), true, 10000);
-            if (rssi < 100)
-                rssiLine.appendData(new DataPoint(timeCount, rssi), true, 10000);
             if (rssnr < 100)
                 rssnrLine.appendData(new DataPoint(timeCount, rssnr), true, 10000);
             latitudeLine.appendData(new DataPoint(timeCount, latitude), true, 10000);
