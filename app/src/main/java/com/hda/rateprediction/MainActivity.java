@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     int timeCount = 0;
     int level, rsrp, rsrq, rssi, rssnr, cqi, asuLevel, timingAdvance, dbm, bandwidth, ci, earFcn, tac, pci;
     double latitude, longitude;
-    boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true, displayRSRP = false, displayRSRQ = false, displayRSSI = false, displayRSSNR = false, displayGPS = false;
+    boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true, displayRSRP = true, displayRSRQ = true, displayRSSI = true, displayRSSNR = true, displayGPS = true;
     Timestamp timestamp;
 
     static String TAG = "hda";
@@ -381,17 +381,32 @@ public class MainActivity extends AppCompatActivity {
     private void appendDataToGraph() {
         Log.i(TAG, "appendDataToGraph: " + timeCount + " " + rsrp + " " + rsrq + " " + rssi + " " + rssnr + " " + latitude + " " + longitude);
         try {
-            if (displayRSRP)
+            if (displayRSRP) {
                 rsrpLine.appendData(new DataPoint(timeCount, rsrp), true, 10000);
-            if (displayRSRQ)
+            } else {
+                rsrpLine.appendData(new DataPoint(timeCount, 0), true, 10000);
+            }
+            if (displayRSRQ) {
                 rsrqLine.appendData(new DataPoint(timeCount, rsrq), true, 10000);
-            if (displayRSSI && rssi < 100)
+            } else {
+                rsrqLine.appendData(new DataPoint(timeCount, 0), true, 10000);
+            }
+            if (displayRSSI && rssi < 100) {
                 rssiLine.appendData(new DataPoint(timeCount, rssi), true, 10000);
-            if (displayRSRQ && rssnr < 100)
+            } else {
+                rssiLine.appendData(new DataPoint(timeCount, 0), true, 10000);
+            }
+            if (displayRSSNR && rssnr < 100) {
                 rssnrLine.appendData(new DataPoint(timeCount, rssnr), true, 10000);
+            } else {
+                rssnrLine.appendData(new DataPoint(timeCount, 0), true, 10000);
+            }
             if (displayGPS) {
                 latitudeLine.appendData(new DataPoint(timeCount, latitude), true, 10000);
                 longitudeLine.appendData(new DataPoint(timeCount, longitude), true, 10000);
+            } else {
+                latitudeLine.appendData(new DataPoint(timeCount, 0), true, 10000);
+                longitudeLine.appendData(new DataPoint(timeCount, 0), true, 10000);
             }
 
         } catch (IllegalArgumentException e) {

@@ -8,8 +8,8 @@
 
     <ToggleButton
         android:id="@+id/gpsToggleButton"
-        android:layout_width="61dp"
-        android:layout_height="44dp"
+        android:layout_width="62dp"
+        android:layout_height="42dp"
         android:checked="true"
         android:text="GPS"
         android:textOff="GPS"
@@ -23,8 +23,8 @@
 
     <ToggleButton
         android:id="@+id/rssnrToggleButton"
-        android:layout_width="71dp"
-        android:layout_height="44dp"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
         android:checked="true"
         android:text="RSSNR"
         android:textOff="RSSNR"
@@ -38,8 +38,8 @@
 
     <ToggleButton
         android:id="@+id/rsrqToggleButton"
-        android:layout_width="61dp"
-        android:layout_height="44dp"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
         android:checked="true"
         android:text="RSRQ"
         android:textOff="RSRQ"
@@ -53,8 +53,8 @@
 
     <ToggleButton
         android:id="@+id/rsrpToggleButton"
-        android:layout_width="61dp"
-        android:layout_height="44dp"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
         android:checked="true"
         android:text="RSRP"
         android:textOff="RSRP"
@@ -125,8 +125,8 @@
 
     <ToggleButton
         android:id="@+id/rssiToggleButton"
-        android:layout_width="61dp"
-        android:layout_height="44dp"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
         android:checked="true"
         android:text="RSSI"
         android:textOff="RSSI"
