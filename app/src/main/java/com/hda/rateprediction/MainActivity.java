@@ -24,8 +24,10 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
@@ -44,11 +46,12 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     TextView textTimeDisplay;
     Button buttonStartResume, buttonStop, buttonSaveToCsv;
+    ToggleButton toggleButtonRSRP, toggleButtonRSRQ, toggleButtonRSSI, toggleButtonRSSNR, toggleButtonGPS;
 
     int timeCount = 0;
     int level, rsrp, rsrq, rssi, rssnr, cqi, asuLevel, timingAdvance, dbm, bandwidth, ci, earFcn, tac, pci;
     double latitude, longitude;
-    boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true;
+    boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true, displayRSRP = false, displayRSRQ = false, displayRSSI = false, displayRSSNR = false, displayGPS = false;
     Timestamp timestamp;
 
     static String TAG = "hda";
@@ -73,6 +76,11 @@ public class MainActivity extends AppCompatActivity {
         buttonStartResume = findViewById(R.id.startButton);
         buttonStop = findViewById(R.id.stopButton);
         buttonSaveToCsv = findViewById(R.id.saveButton);
+        toggleButtonRSRP = findViewById(R.id.rsrpToggleButton);
+        toggleButtonRSRQ = findViewById(R.id.rsrqToggleButton);
+        toggleButtonRSSI = findViewById(R.id.rssiToggleButton);
+        toggleButtonRSSNR = findViewById(R.id.rssnrToggleButton);
+        toggleButtonGPS = findViewById(R.id.gpsToggleButton);
         final GraphView graph = findViewById(R.id.graph);
 
         initializeGraph(graph);
@@ -100,6 +108,61 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 writeDataToCSV();
+            }
+        });
+
+        toggleButtonRSRP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    displayRSRP = true;
+                } else {
+                    displayRSRP = false;
+                }
+            }
+        });
+
+        toggleButtonRSRQ.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    displayRSRQ = true;
+                } else {
+                    displayRSRQ = false;
+                }
+            }
+        });
+
+        toggleButtonRSSI.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    displayRSSI = true;
+                } else {
+                    displayRSSI = false;
+                }
+            }
+        });
+
+        toggleButtonRSSNR.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    displayRSSNR = true;
+                } else {
+                    displayRSSNR = false;
+                }
+            }
+        });
+
+        toggleButtonGPS.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    displayGPS = true;
+                } else {
+                    displayGPS = false;
+                }
             }
         });
 
@@ -255,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
                 CSVWriter csvWriter = new CSVWriter(new FileWriter(csv, true));
                 if (isFirstCSVWrite) {
-                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE","CQI", "ASULEVEL", "TIMINGADVANCE", "DBM", "BANDWIDTH", "CI", "EARFCN", "TAC", "PCI"};
+                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE", "CQI", "ASULEVEL", "TIMINGADVANCE", "DBM", "BANDWIDTH", "CI", "EARFCN", "TAC", "PCI"};
                     csvWriter.writeNext(headerNames);
                     isFirstCSVWrite = false;
                 }
@@ -318,14 +381,19 @@ public class MainActivity extends AppCompatActivity {
     private void appendDataToGraph() {
         Log.i(TAG, "appendDataToGraph: " + timeCount + " " + rsrp + " " + rsrq + " " + rssi + " " + rssnr + " " + latitude + " " + longitude);
         try {
-            rsrpLine.appendData(new DataPoint(timeCount, rsrp), true, 10000);
-            rsrqLine.appendData(new DataPoint(timeCount, rsrq), true, 10000);
-            if (rssi < 100)
+            if (displayRSRP)
+                rsrpLine.appendData(new DataPoint(timeCount, rsrp), true, 10000);
+            if (displayRSRQ)
+                rsrqLine.appendData(new DataPoint(timeCount, rsrq), true, 10000);
+            if (displayRSSI && rssi < 100)
                 rssiLine.appendData(new DataPoint(timeCount, rssi), true, 10000);
-            if (rssnr < 100)
+            if (displayRSRQ && rssnr < 100)
                 rssnrLine.appendData(new DataPoint(timeCount, rssnr), true, 10000);
-            latitudeLine.appendData(new DataPoint(timeCount, latitude), true, 10000);
-            longitudeLine.appendData(new DataPoint(timeCount, longitude), true, 10000);
+            if (displayGPS) {
+                latitudeLine.appendData(new DataPoint(timeCount, latitude), true, 10000);
+                longitudeLine.appendData(new DataPoint(timeCount, longitude), true, 10000);
+            }
+
         } catch (IllegalArgumentException e) {
             Log.i(TAG, "run: Exception adding data to graph " + e.getMessage());
         }
