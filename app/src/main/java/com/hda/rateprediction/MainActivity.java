@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    TextView textTimeDisplay;
+    TextView textTimeDisplay, textRsrpDisplay, textRsrqDisplay, textRssiDisplay, textRssnrDisplay, textGpsDisplay;
     Button buttonStartResume, buttonStop, buttonSaveToCsv;
     ToggleButton toggleButtonRSRP, toggleButtonRSRQ, toggleButtonRSSI, toggleButtonRSSNR, toggleButtonGPS;
 
@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         textTimeDisplay = findViewById(R.id.timeDisplay);
+        textRsrpDisplay = findViewById(R.id.rsrpDisplay);
+        textRsrqDisplay = findViewById(R.id.rsrqDisplay);
+        textRssiDisplay = findViewById(R.id.rssiDisplay);
+        textRssnrDisplay = findViewById(R.id.rssnrDisplay);
+        textGpsDisplay = findViewById(R.id.gpsDisplay);
         buttonStartResume = findViewById(R.id.startButton);
         buttonStop = findViewById(R.id.stopButton);
         buttonSaveToCsv = findViewById(R.id.saveButton);
@@ -175,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         getLocationData();
         prepareCSVData();
         appendDataToGraph();
+        displayDataToUser();
         if (isRunning) {
             delayHandler(1000);
         }
@@ -423,6 +429,19 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "getLocationData: Location data not retrieved from device");
         }
         Log.i(TAG, "getLocationData: Latitude: " + latitude + " Longitude: " + longitude);
+    }
+
+    private void displayDataToUser() {
+        String rsrpFormat = String.format(Locale.getDefault(), "%d dBm",rsrp);
+        String rsrqFormat = String.format(Locale.getDefault(), "%d dBm",rsrq);
+        String rssiFormat = String.format(Locale.getDefault(), "%d dBm",rssi);
+        String rssnrFormat = String.format(Locale.getDefault(), "%d dBm",rssnr);
+        String gpsFormat = String.format(Locale.getDefault(), "%f,%f ",latitude,longitude);
+        textRsrpDisplay.setText(rsrpFormat);
+        textRsrqDisplay.setText(rsrqFormat);
+        textRssiDisplay.setText(rssiFormat);
+        textRssnrDisplay.setText(rssnrFormat);
+        textGpsDisplay.setText(gpsFormat);
     }
 
 }
