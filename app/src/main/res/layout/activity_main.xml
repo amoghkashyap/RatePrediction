@@ -6,6 +6,66 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ToggleButton
+        android:id="@+id/gpsToggleButton"
+        android:layout_width="62dp"
+        android:layout_height="42dp"
+        android:checked="true"
+        android:text="GPS"
+        android:textOff="GPS"
+        android:textOn="GPS"
+        app:layout_constraintBottom_toTopOf="@+id/timeDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="@+id/rsrpToggleButton"
+        app:layout_constraintTop_toBottomOf="@+id/graph"
+        app:layout_constraintVertical_bias="0.772" />
+
+    <ToggleButton
+        android:id="@+id/rssnrToggleButton"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
+        android:checked="true"
+        android:text="RSSNR"
+        android:textOff="RSSNR"
+        android:textOn="RSSNR"
+        app:layout_constraintBottom_toTopOf="@+id/timeDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.774"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/graph"
+        app:layout_constraintVertical_bias="0.772" />
+
+    <ToggleButton
+        android:id="@+id/rsrqToggleButton"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
+        android:checked="true"
+        android:text="RSRQ"
+        android:textOff="RSRQ"
+        android:textOn="RSRQ"
+        app:layout_constraintBottom_toTopOf="@+id/timeDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.252"
+        app:layout_constraintStart_toStartOf="@+id/rsrpToggleButton"
+        app:layout_constraintTop_toBottomOf="@+id/graph"
+        app:layout_constraintVertical_bias="0.772" />
+
+    <ToggleButton
+        android:id="@+id/rsrpToggleButton"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
+        android:checked="true"
+        android:text="RSRP"
+        android:textOff="RSRP"
+        android:textOn="RSRP"
+        app:layout_constraintBottom_toTopOf="@+id/timeDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/graph"
+        app:layout_constraintVertical_bias="0.772" />
+
     <TextView
         android:id="@+id/timeDisplay"
         android:layout_width="239dp"
@@ -16,7 +76,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/graph"
-        app:layout_constraintVertical_bias="0.758" />
+        app:layout_constraintVertical_bias="0.784" />
 
     <Button
         android:id="@+id/startButton"
@@ -55,12 +115,87 @@
 
     <com.jjoe64.graphview.GraphView
         android:id="@+id/graph"
-        android:layout_width="397dp"
-        android:layout_height="439dp"
+        android:layout_width="390dp"
+        android:layout_height="428dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.02" />
+
+    <ToggleButton
+        android:id="@+id/rssiToggleButton"
+        android:layout_width="74dp"
+        android:layout_height="42dp"
+        android:checked="true"
+        android:text="RSSI"
+        android:textOff="RSSI"
+        android:textOn="RSSI"
+        app:layout_constraintBottom_toTopOf="@+id/timeDisplay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toStartOf="@+id/rsrpToggleButton"
+        app:layout_constraintTop_toBottomOf="@+id/graph"
+        app:layout_constraintVertical_bias="0.772" />
+
+    <TextView
+        android:id="@+id/rsrpDisplay"
+        android:layout_width="70dp"
+        android:layout_height="21dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.639" />
+
+    <TextView
+        android:id="@+id/rsrqDisplay"
+        android:layout_width="70dp"
+        android:layout_height="21dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.284"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.639" />
+
+    <TextView
+        android:id="@+id/rssiDisplay"
+        android:layout_width="70dp"
+        android:layout_height="21dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.639" />
+
+    <TextView
+        android:id="@+id/rssnrDisplay"
+        android:layout_width="70dp"
+        android:layout_height="21dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.774"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.639" />
+
+    <TextView
+        android:id="@+id/gpsDisplay"
+        android:layout_width="64dp"
+        android:layout_height="21dp"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.976"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.639" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
