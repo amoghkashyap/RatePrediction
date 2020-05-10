@@ -432,16 +432,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayDataToUser() {
-        String rsrpFormat = String.format(Locale.getDefault(), "%d dBm",rsrp);
-        String rsrqFormat = String.format(Locale.getDefault(), "%d dBm",rsrq);
-        String rssiFormat = String.format(Locale.getDefault(), "%d dBm",rssi);
-        String rssnrFormat = String.format(Locale.getDefault(), "%d dBm",rssnr);
-        String gpsFormat = String.format(Locale.getDefault(), "%f,%f ",latitude,longitude);
-        textRsrpDisplay.setText(rsrpFormat);
-        textRsrqDisplay.setText(rsrqFormat);
-        textRssiDisplay.setText(rssiFormat);
-        textRssnrDisplay.setText(rssnrFormat);
-        textGpsDisplay.setText(gpsFormat);
+        String rsrpFormat = String.format(Locale.getDefault(), "%d dBm", rsrp);
+        String rsrqFormat = String.format(Locale.getDefault(), "%d dBm", rsrq);
+        String rssiFormat = String.format(Locale.getDefault(), "%d dBm", rssi);
+        String rssnrFormat = String.format(Locale.getDefault(), "%d dBm", rssnr);
+        String gpsFormat = String.format(Locale.getDefault(), "%f,%f ", latitude, longitude);
+        String defaultDisplay = "N/A";
+
+        if (displayRSRP)
+            textRsrpDisplay.setText(rsrpFormat);
+        else
+            textRsrpDisplay.setText(defaultDisplay);
+
+        if (displayRSRQ)
+            textRsrqDisplay.setText(rsrqFormat);
+        else
+            textRsrqDisplay.setText(defaultDisplay);
+
+        if (displayRSSI)
+            textRssiDisplay.setText(rssiFormat);
+        else
+            textRssiDisplay.setText(defaultDisplay);
+
+        if (displayRSSNR)
+            textRssnrDisplay.setText(rssnrFormat);
+        else
+            textRssnrDisplay.setText(defaultDisplay);
+
+        if (displayGPS)
+            textGpsDisplay.setText(gpsFormat);
+        else
+            textGpsDisplay.setText(defaultDisplay);
+
     }
 
 }
