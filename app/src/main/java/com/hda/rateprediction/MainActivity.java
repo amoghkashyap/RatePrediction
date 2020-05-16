@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     int timeCount = 0;
     int level, rsrp, rsrq, rssi, rssnr, cqi, asuLevel, timingAdvance, dbm, bandwidth, ci, earFcn, tac, pci;
     double latitude, longitude;
-    boolean isRunning, isFirstCSVWrite = true, isFirstOperatorDisplay = true, displayRSRP = true, displayRSRQ = true, displayRSSI = true, displayRSSNR = true, displayGPS = true;
+    boolean isRunning, isFirstOperatorDisplay = true, displayRSRP = true, displayRSRQ = true, displayRSSI = true, displayRSSNR = true, displayGPS = true;
     Timestamp timestamp;
 
     static String TAG = "hda";
@@ -323,11 +323,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 CSVWriter csvWriter = new CSVWriter(new FileWriter(csv, true));
-                if (isFirstCSVWrite) {
-                    String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE", "CQI", "ASULEVEL", "TIMINGADVANCE", "DBM", "BANDWIDTH", "CI", "EARFCN", "TAC", "PCI"};
-                    csvWriter.writeNext(headerNames);
-                    isFirstCSVWrite = false;
-                }
+                String[] headerNames = {"Systime", "RSRP(dBm)", "RSRQ(dB)", "RSSI(dBm)", "RSSNR", "LATITUDE", "LONGITUDE", "CQI", "ASULEVEL", "TIMINGADVANCE", "DBM", "BANDWIDTH", "CI", "EARFCN", "TAC", "PCI"};
+                csvWriter.writeNext(headerNames);
 
                 csvWriter.writeAll(networkDataList);
                 csvWriter.close();
